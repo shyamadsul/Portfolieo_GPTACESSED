@@ -1,0 +1,21 @@
+.job { align-items: start; }
+.job-detail { min-width: 0; }
+.job-detail > p { font-size: 1rem; line-height: 1.75; }
+.responsibility-group { margin-top: 28px; }
+.job-detail h5 { font: 700 1rem/1.5 Manrope, Arial, sans-serif; margin: 0 0 10px; color: var(--ink); }
+.responsibility-group ul { margin-top: 10px; }
+.job-detail li { line-height: 1.75; margin-bottom: 12px; }
+.job-highlight { border-top: 3px solid var(--purple); }
+.core-label { display: inline-block; color: #443bc5; background: #e7e4ff; border-radius: 6px; padding: 6px 10px; margin-bottom: 16px; font-size: .75rem; font-weight: 700; letter-spacing: .04em; }
+.migration-focus { margin-top: 25px; padding: 22px 24px; border-left: 4px solid var(--purple); border-radius: 0 12px 12px 0; background: #e8e5ff; }
+.migration-focus h5 { color: #443bc5; font-size: 1.125rem; }
+.migration-focus p { color: #464563; line-height: 1.75; }
+.job-detail .tags { margin-top: 26px; }
+@media (min-width: 1001px) { .job-meta { position: sticky; top: 30px; } }
+@media (max-width: 700px) {
+  .migration-focus { padding: 18px; }
+  .core-label { line-height: 1.6; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .job:hover { transform: none; }
+}
