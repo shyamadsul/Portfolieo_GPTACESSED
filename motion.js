@@ -60,11 +60,31 @@
     panel.addEventListener('pointerleave', () => { panel.style.transform = ''; });
   }
 
+  const recommendationTrack = document.querySelector('.recommendation-track');
+  document.querySelectorAll('[data-recommendation-direction]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const card = recommendationTrack?.querySelector('.recommendation-card');
+      if (!recommendationTrack || !card) return;
+      const direction = button.dataset.recommendationDirection === 'next' ? 1 : -1;
+      recommendationTrack.scrollBy({ left: direction * (card.getBoundingClientRect().width + 18), behavior: 'smooth' });
+    });
+  });
+
+  document.querySelectorAll('.recommendation-more').forEach((button) => {
+    button.addEventListener('click', () => {
+      const card = button.closest('.recommendation-card');
+      const expanded = card?.classList.toggle('is-expanded');
+      button.setAttribute('aria-expanded', String(expanded));
+      button.textContent = expanded ? 'Show less' : 'Read more';
+    });
+  });
+
   if (reducedMotion) return;
+
   document.body.classList.add('motion-ready');
   const groups = [
     ['.section-heading', 'from-left'], ['.expert-card', ''], ['.job-meta', 'from-right'], ['.responsibility-group', ''], ['.migration-focus', ''],
-    ['.cert', ''], ['.fundamentals', 'from-left'], ['.education', 'from-right'],
+    ['.recommendation-card', ''], ['.cert', ''], ['.fundamentals', 'from-left'], ['.education', 'from-right'],
     ['.contact', ''], ['footer', '']
   ];
 
