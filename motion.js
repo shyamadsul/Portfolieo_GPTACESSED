@@ -60,6 +60,21 @@
     panel.addEventListener('pointerleave', () => { panel.style.transform = ''; });
   }
 
+  const techCards = [...document.querySelectorAll('.tech-card')];
+  const techDetail = document.querySelector('.tech-detail');
+  if (techCards.length && techDetail) {
+    const activateTech = (card, index) => {
+      techCards.forEach((item) => item.classList.toggle('is-selected', item === card));
+      techDetail.classList.add('is-changing');
+      window.setTimeout(() => {
+        techDetail.querySelector('.tech-detail-label').textContent = `${String(index + 1).padStart(2, '0')} / ${card.dataset.techTitle.toUpperCase()}`;
+        techDetail.querySelector('p').textContent = card.dataset.techCopy;
+        techDetail.classList.remove('is-changing');
+      }, reducedMotion ? 0 : 130);
+    };
+    techCards.forEach((card, index) => card.addEventListener('click', () => activateTech(card, index)));
+  }
+
   const recommendationTrack = document.querySelector('.recommendation-track');
   document.querySelectorAll('[data-recommendation-direction]').forEach((button) => {
     button.addEventListener('click', () => {
