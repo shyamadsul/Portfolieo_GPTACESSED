@@ -94,6 +94,63 @@
     });
   });
 
+  const hireModal = document.querySelector('#hire-modal');
+  const hireForm = document.querySelector('#hire-form');
+  const hireOpenButtons = [...document.querySelectorAll('[data-hire-open]')];
+  const hireCloseButton = document.querySelector('[data-hire-close]');
+
+  const openHireModal = () => {
+    if (!hireModal) return;
+    if (typeof hireModal.showModal === 'function') hireModal.showModal();
+    else hireModal.setAttribute('open', '');
+    document.body.classList.add('hire-modal-open');
+    window.setTimeout(() => hireModal.querySelector('input')?.focus(), 0);
+  };
+
+  const closeHireModal = () => {
+    if (!hireModal) return;
+    if (typeof hireModal.close === 'function') hireModal.close();
+    else hireModal.removeAttribute('open');
+    document.body.classList.remove('hire-modal-open');
+  };
+
+  hireOpenButtons.forEach((button) => button.addEventListener('click', openHireModal));
+  hireCloseButton?.addEventListener('click', closeHireModal);
+  hireModal?.addEventListener('click', (event) => {
+    if (event.target === hireModal) closeHireModal();
+  });
+  hireModal?.addEventListener('close', () => document.body.classList.remove('hire-modal-open'));
+
+  hireForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!hireForm.reportValidity()) return;
+
+    const data = new FormData(hireForm);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const company = String(data.get('company') || '').trim();
+    const interest = String(data.get('interest') || '').trim();
+    const message = String(data.get('message') || '').trim();
+
+    const subject = `Portfolio hiring enquiry — ${interest}`;
+    const body = [
+      `Hi Shyam,`,
+      '',
+      `I'm interested in hiring you for: ${interest}`,
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      company ? `Company: ${company}` : '',
+      '',
+      'Message:',
+      message,
+      '',
+      'Sent from shyamadsul_portfolio.'
+    ].filter((line, index, lines) => line !== '' || (index > 0 && lines[index - 1] !== '')).join('\n');
+
+    window.location.href = `mailto:adsulshyam0000@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
   if (reducedMotion) return;
 
   document.body.classList.add('motion-ready');
